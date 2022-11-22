@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block contents %}
+<div class="row">
+  <div class="col-md-4 order-md-0 order-sm-1 order-1">
+    <div class="card overflow-hidden">
+      <div class="bg-primary bg-soft">
+        <div class="row">
+          <div class="col-7">
+            <div class="text-primary p-3 mb-2">
+              <p class="text-dark m-0">{{ object.type_client }}</p>
+              <h4 class="text-primary font-weight-bolder">
+                {{ object.prenom|capfirst }} {{ object.nom|capfirst }}</h4>
+            </div>
+          </div>
+          <div class="col-5 align-self-end">
+              <img src="" alt="" class="img-fluid" style="height: 72px;"
+                 kasperskylab_antibanner="on">
+              {% if object.is_online %}
+                    <i class="mdi mdi-record text-success"></i>
+                    <span class="text-lowercase text-muted">
+                        {% trans "Online" %}
+                    </span>
+                {% else %}
+                    <i class="mdi mdi-record text-danger"></i>
+                    <span class="text-lowercase text-muted">
+                        {% trans "Offline" %}
+                    </span>
+                {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="card-body pt-0">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="avatar-md profile-user-wid mb-4">
+              <img src="{% if object.pictures.logo %}{{ object.pictures.logo.url }}{% else %}{% static 'images/default-shop.png' %}{% endif %}" alt=""
+                   class="img-thumbnail rounded" style="height: 100%" kasperskylab_antibanner="on">
+            </div>
+            <h5 class="font-size-15 text-truncate">
+                {% if object.get_full_name != object.email %}
+                      {{ object.get_full_name }}
+                {% else %}
+                  -
+                {% endif %}
+            </h5>
+            <p class="font-size-11 text-muted mb-0">
+                {% if object.date_joined %}
+                    {% trans "joined" context "Company field" %}
+                    {{ object.date_joined }}
+                {% endif %}
+            </p>
+          </div>
+
+          <div class="col-sm-8">
+            <div class="pt-4">
+
+              <div class="mt-0 ">
+              <a href="{% url "company:company-update" slug=object.slug %}" class="btn btn-outline-primary btn-sm float-end mb-2">
+                {% trans "Edit company" context "company action" %}<i class="mdi mdi-arrow-right ms-2"></i>
+              </a>
+
+              {% if perms.account.impersonate_users %}
+                <a href="{% url 'company:company-list' %}" class="btn btn-outline-primary btn-sm float-end mb-2 waves-effect">
+                  {% trans 'Back to list' context 'Company back to list' %}<i class="mdi mdi-arrow-right ms-2"></i>
+                </a>
+              {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end card -->
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">
+                    {% trans "Some card with informations" %}
+                </h4>
+            </div>
+        </div>
+
+  </div>
+  <div class="col-md-8 order-md-1 order-sm-0 order-0">
+    <ul class="nav nav-tabs nav-fill mb-3" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#orders" role="tablist" aria-controls="orders"
+           aria-selected="true">  {% trans "Recent orders" context "Company recent orders table title" %}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#notes" role="tablist" aria-controls="notes"
+           aria-selected="false"> {% trans "Company notes" context "Company notes card title" %}</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane fade active show" id="orders" role="tabpanel">
+        <div class="card">
+        <div class="card-body">
+        <div class="data-table-header">
+          <h5 class="data-table-title">
+            {% trans "Recent orders" context "Customer recent orders table title" %}
+          </h5>
+        </div>
+          <div class="table-responsive">
+                <table class="table align-middle table-nowrap table-hover myTable">
+              <thead>
+                <tr>
+                   <td>{% trans "pk" context "Orders table header" %}</td>
+
+                  <td>{% trans "Placed on" context "Orders table header" %}</td>
+
+                  <td>{% trans "Payment" context "Orders table header" %}</td>
+
+                  <td>{% trans "Order" context "Orders table header" %}</td>
+
+                  <td>{% trans "Total" context "Orders table header" %}</td>
+                    <td class="text-end fw-bold">
+                        {% trans "Actions" %}
+                    </td>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+                </table>
+          </div>
+
+            </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="notes" role="tabpanel">
+        <div class="card">
+        <div class="card-body">
+        <a class="base-form btn btn-light btn-sm float-end waves-effect" data-bs-toggle="modal" data-bs-target="#BaseModal">
+            <i class="mdi mdi-plus-circle-outline text-success me-2 "></i>{% trans "Add note" context "Customer notes card action" %}
+          </a>
+          <p class="card-title mb-4">
+            {% trans "Company notes" context "Customer notes card title" %}
+          </p>
+
+        </div>
+
+      </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+    <div class="modal fade" id="BaseModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"  role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <form method="POST" action="" id="form-url" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" id="staticBackdropLabel">
+                            <img class="me-2" src="{% static 'images/modal-logo.png' %}" alt="" height="22">
+                                <span id="modal-title"></span></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                            <div class="modal-body mb-0" >
+                                {% csrf_token %}
+                                <span id="form-receiver">
+                                </span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light btn-sm" data-bs-dismiss="modal">
+                                    {% trans "Cancel" %}
+                                </button>
+                                <button class="btn btn-primary btn-sm fk-adder-submit" type="submit">
+                                    {% trans "Create" %}
+                                </button>
+                            </div></div>
+                        </form>
+
+            </div>
+        </div>
+{% endblock %}

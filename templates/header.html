@@ -1,0 +1,243 @@
+{% load static %}
+{% load humanize %}
+
+{% block header %}
+<header id="page-topbar">
+
+    <div class="navbar-header">
+        <div class="d-flex">
+            <!-- LOGO -->
+            <div class="navbar-brand-box">
+                <a href="" class="logo logo-dark">
+                    <span class="logo-sm">
+                        <img src="{% static 'images/ordo-blue.png'%}" alt="" height="42">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'images/ordo-blue.png'%}" alt="" height="42">
+                    </span>
+                </a>
+
+                <a href="" class="logo logo-light">
+                    <span class="logo-sm">
+                        <img src="{% static 'images/ordo-mini-logo.png'%}" alt="" height="25">
+                    </span>
+                    <span class="logo-lg">
+                        <img src="{% static 'images/letter.png'%}" alt="" height="25">
+                    </span>
+                </a>
+            </div>
+
+            <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect d-flex d-lg-none" id="vertical-menu-btn">
+                <i class="mdi mdi-filter-outline my-auto font-size-20"></i>
+            </button>
+
+            <!-- App Search-->
+            <form class="app-search d-none d-lg-block">
+                <div class="position-relative">
+                    <input type="text" class="form-control" id="myInput" placeholder="Rechercher...">
+                    <span class="bx bx-search-alt"></span>
+                </div>
+            </form>
+
+
+        </div>
+
+        <div class="d-flex">
+
+            <div class="dropdown d-inline-block d-lg-none ms-2">
+                <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-search-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="mdi mdi-magnify"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                     aria-labelledby="page-header-search-dropdown">
+
+                    <form class="p-3">
+                        <div class="form-group m-0">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search ..."
+                                       aria-label="Recipient's username">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit"><i
+                                            class="mdi mdi-magnify"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="dropdown d-none d-lg-inline-block ms-1">
+                <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                    <i class="bx bx-customize"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                    <div class="px-lg-2">
+                        <div class="row g-0">
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="/site">
+                                    <img src="{% static 'images/website-integre-traiteur.png'%}" alt="site">
+                                    <span>Site</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="/blog">
+                                    <img src="{% static 'images/blog.png'%}" alt="blog">
+                                    <span>Blog</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="/social">
+                                    <img src="{% static 'images/social-icons.png'%}" alt="réseaux">
+                                    <span>Réseaux sociaux</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row g-0">
+                            <div class="col">
+                                <a class="dropdown-icon-item" href="#">
+                                    <img src="{% static 'images/marketing.png'%}" alt="marketing">
+                                    <span>Marketing</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item noti-icon waves-effect"
+                        id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    {% if notif.count != 0 %}
+                    <i class="bx bx-bell bx-tada" id="turnoff-bell"></i>
+                    <span class="badge bg-danger rounded-pill" data-value="{{notif.count}}" id="notif-counter">{{notif.count}}</span>
+                    {% else %}
+                     <i class="bx bx-bell"></i>
+                    {% endif %}
+                </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                     aria-labelledby="page-header-notifications-dropdown">
+                    <div class="p-3">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="m-0" key="t-notifications"> Notifications </h6>
+                            </div>
+                            <div class="col-auto">
+                                <a href="" class="small" key="t-view-all"> Tout Voir</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-simplebar style="max-height: 230px;">
+                        {% for each in notif %}
+                        <a class="text-reset notification-item notification-item-{{ each.slug }}">
+                            <div class="media">
+                                <div class="avatar-xs me-3">
+                                          {% if each.sender %}
+                                          <img class="avatar-xs rounded-circle me-3" src="{% if each.sender.avatar %}{{each.sender.avatar.url}}{% else %}{% static 'images/avatar.png' %}{% endif %}" alt="">
+                                          {% else %}
+                                            <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                  <i class="bx bx-tada"></i>
+                                                </span>
+                                          {% endif %}
+
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="mt-0 mb-1" key="t-your-order">
+
+                                        <span class="text-info"> {{each.titre|capfirst }}</span>
+                                    </h6>
+                                    <div class="text-muted">
+                                        <p class="font-size-12 mb-1" key="t-grammer">{{ each.message }}</p>
+                                        <p class="mb-0">
+                                            <i class="mdi mdi-clock-outline"></i>
+                                            <span key="t-min-ago">{{ each.date_creation|naturaltime }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="ms-auto">
+                                    <input class="mark-as-seen" type="checkbox" id="{{ each.slug }}">
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <div class="p-2 border-top d-grid">
+                        <a class="btn btn-sm btn-link font-size-14 text-center" href="">
+                            <i class="mdi mdi-arrow-right-circle me-1"></i> <span key="t-view-more">Voir plus ...</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {% if request.user.avatar %}
+                    <img src="{{ request.user.avatar.url }}" alt=""
+                         class="rounded-circle header-profile-user">
+                    {% else %}
+                    <img src="{% static 'images/avatar.png' %}" alt=""
+                         class="rounded-circle header-profile-user">
+                    {% endif %}
+                    <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{user.username|capfirst}}</span>
+                    <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-end">
+
+                    <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i>
+                        <span key="t-lock-screen">Véroullié</span></a>
+                    <div class="dropdown-divider"></div>
+                    {% if user.is_authenticated %}
+                    <a class="dropdown-item" href=""><i
+                            class="bx bx-key font-size-16 align-middle me-1"></i> Modifier Mot de passe</a>
+                    <a class="dropdown-item text-danger" href=""><i
+                            class="bx bx-log-out font-size-16 align-middle me-1 text-danger"></i> Se deconnecter</a>
+                    {% else %}
+                    <a class="dropdown-item " href=""><i
+                            class="bx bx-log-in font-size-16 align-middle me-1 "></i> Se connecter</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item font-size-16">
+                    <i class="mdi mdi-heart-outline font-size-20"></i>
+                </button>
+            </div>
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item right-bar-toggle font-size-16">
+                    <i class="mdi mdi-cart-outline font-size-20"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+<!--{% block extra_javascript %}-->
+<!--{{ room_name|json_script:"room-name" }}-->
+<!--<script>-->
+<!--        const roomName = JSON.parse(document.getElementById('room-name').textContent);-->
+
+<!--        const notificationSocket = new WebSocket(-->
+<!--            'ws://'-->
+<!--            + window.location.host-->
+<!--            + '/ws/notification/'-->
+<!--            + roomName-->
+<!--            + '/'-->
+<!--        );-->
+
+<!--        notificationSocket.onmessage = function(e) {-->
+<!--            const data = JSON.parse(e.data);-->
+<!--           // document.querySelector('#chat-log').value += (data.message + '\n');-->
+<!--        };-->
+
+<!--        notificationSocket.onclose = function(e) {-->
+<!--            console.error('Chat socket closed unexpectedly');-->
+<!--        };-->
+
+<!--</script>-->
+<!--{% endblock %}-->

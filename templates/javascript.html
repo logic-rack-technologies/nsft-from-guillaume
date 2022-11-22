@@ -1,0 +1,51 @@
+{% load static %}
+{% block javascript %}
+<!-- JAVASCRIPT -->
+<script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'libs/jquery-ui-dist/jquery-ui.min.js' %}"></script>
+
+<script src="{% static 'libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/js/bootstrap-tab.js' %}"></script>
+<script src="{% static 'libs/metismenu/metisMenu.min.js' %}"></script>
+<script src="{% static 'libs/select2/js/select2.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap-timepicker/js/bootstrap-timepicker.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+
+<script src="{% static 'libs/table-edits/build/table-edits.min.js' %}"></script>
+<!-- Sweet Alerts js -->
+<script src="{% static 'libs/sweetalert2/sweetalert2.min.js' %}"></script>
+<!-- Sweet alert init js-->
+<script src="{% static 'js/pages/sweet-alerts.init.js' %}"></script>
+{#<script src="{% static 'js/pages/table-editable.int.js' %}"></script>#}
+<!-- jquery step -->
+
+<script src="{% static 'libs/toastr/build/toastr.min.js' %}"></script>
+<script src="{% static 'libs/tui-chart/tui-chart-all.min.js' %}"></script>
+
+<!-- toastr init -->
+<script src="{% static 'js/pages/toastr.init.js' %}"></script>
+<!-- form advanced init -->
+<script src="{% static 'js/pages/form-advanced.init.js' %}"></script>
+<!-- Session timeout js -->
+<script src="{% static 'js/pages/validation.init.js' %}"></script>
+
+<script src="{% static 'js/app.js' %}"></script>
+
+<script>
+
+$('.container-fluid').show();
+
+</script>
+<script defer>
+$.ajax({
+   url: '/clients/defered-cart',
+   method: 'GET',
+   dataType: 'json',
+   success: function(response) {
+       $('#cart-sidebar').html(response.frame);
+   }
+});
+
+</script>
+{% endblock %}

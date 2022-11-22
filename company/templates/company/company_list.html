@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block contents %}
+<div class="card">
+    <div class="card-body">
+
+
+     <div class="table-responsive">
+        <table class="table align-middle table-nowrap table-hover myTable">
+
+        <thead>
+            <tr>
+                {% trans "Name" context "Orders table header" %}
+                <th>
+                {% trans "updated at" context "Orders table header" %}
+                </th>
+                <th>
+                    {% trans "price" context "Orders table header" %}
+                </th>
+                <th class="text-end">{% trans "Action" %}</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for each in object_list %}
+            <tr class="main-table">
+                <td>
+                <div class="media">
+                    <img {% if each.images.first.image %}  src="{{ each.images.first.image.url }}" class="rounded avatar-xs"
+                             {% else %}class="rounded avatar-xs border default-product"{% endif %} alt="{{ each.images.first.alt }}">
+                        <div class="ms-2">
+                             <a href="{{ each.get_absolute_url }}">
+                                <p class="font-size-12 fw-bold text-uppercase text-muted mb-0">{{each|capfirst|truncatechars:15}}</p>
+                                <small class="font-size-11 fw-semibold text-muted mb-0">
+                                     {{ each.product_type|capfirst }}
+                            </small>
+                            </a>
+                        </div>
+                    </div>
+                <td>
+                    <span class="badge py-2 px-2 bg-info">
+                        {{ each.updated_at|date:"d M Y" }}
+                    </span>
+                </td>
+                <td></td>
+                <td>
+                    <div class="d-flex flex-row float-end">
+
+                        <a class="text-info" href="{% url "company:company-detail" slug=each.slug %}"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans "View product details" %}">
+                            <i class="mdi mdi-eye-outline font-size-18 me-2"></i></a>
+                        <a class="text-success" href="{% url "company:company-update" slug=each.slug %}"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans "Edit product" %}">
+                                <i class="mdi mdi-pencil-outline font-size-18 me-2"></i></a>
+
+
+
+
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+        </table>
+     </div>
+
+    </div>
+</div>
+
+{% endblock %}

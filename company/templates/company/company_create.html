@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block contents %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="fw-bold mb-3">{% trans "Create company" %}</h4>
+            <form method="post" action="" novalidate class="needs-validation">
+            <div class="row">
+                {% crispy form %}
+                <button class="btn btn-outline-primary " type="submit">{% trans "Submit" %}</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block extra_javascript %}
+<script>
+    $(".form-group").addClass("col-6 mb-3");
+</script>
+{% endblock %}

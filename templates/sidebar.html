@@ -1,0 +1,41 @@
+{% load static %}
+{% load i18n %}
+
+{% block sidebar %}
+<!-- ========== Left Sidebar Start ========== -->
+<div class="vertical-menu">
+    <div data-simplebar class="h-100">
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+            <!-- Left Menu Start -->
+            <ul class="metismenu list-unstyled" id="side-menu">
+                <li class="menu-title" key="t-menu">{% trans "Dashboard" context "Dashboard dashboard" %}</li>
+                    <li>
+                        <a href="/" class="waves-effect">
+                            <i class="mdi mdi-monitor-dashboard"></i>
+                            <span key="t-dashboard">{% trans "Dashboard" context "Dashboard dashboard" %}</span>
+                        </a>
+                    </li>
+                      <li>
+                        <a href="{% url "company:company-list" %}" class="waves-effect">
+                            <i class="mdi mdi-database-lock"></i>
+                            <span class="badge rounded-pill bg-info float-end"></span>
+                            <span key="t-bdd">{% trans "Company list" %}</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="{% url "company:icon-library" %}" class="waves-effect">
+                            <i class="mdi mdi-simple-icons"></i>
+                            <span class="badge rounded-pill bg-info float-end"></span>
+                            <span key="t-bdd">{% trans "Icon library" %}</span>
+                        </a>
+                    </li>
+
+
+        </ul>
+        </div>
+
+        </div>
+    </div>
+
+{% endblock %}

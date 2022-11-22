@@ -1,0 +1,162 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="la solution de gestion événementielle traiteur 360" name="description"/>
+  <meta content="ordo" name="author"/>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap" rel="stylesheet"
+        type="text/css">
+
+  <style>
+        *{
+            font-family:"Poppins", sans-serif;
+        }
+
+    </style>
+  <style>
+
+        input[switch="bool"]:checked + label {
+            background-color: #f6ca55!important;
+        }
+        input[switch]:checked + label::before {
+            font: normal normal normal 18px/1 "Material Design Icons"!important;
+            padding-top: 2px!important;
+            content: "\F0644"!important;
+        }
+        input[switch]:checked + label::after {
+            font: normal normal normal 18px/1 "Material Design Icons"!important;
+            padding-top: 2px!important;
+            content: "\F035C"!important;
+        }
+        input[switch="bool"] + label {
+            background-color: #f6ca55!important;
+        }
+        input[switch] + label::before {
+            font: normal normal normal 18px/1 "Material Design Icons"!important;
+            padding-top: 2px!important;
+            content: "\F035C"!important;
+        }
+        input[switch] + label::after {
+            font: normal normal normal 18px/1 "Material Design Icons"!important;
+            padding-top: 2px!important;
+            content: "\F0644"!important;
+        }
+        .olwski-yellow {
+            color: #f6ca55;
+        }
+        .font-blue {
+            color: #004777;
+        }
+        .animate-bottom {
+          position: relative;
+          animation: animatebottom 0.4s;
+        }
+        .modal-backdrop {
+            opacity:0.3 !important;
+            background-color: #gggg3;
+        }
+        @keyframes animatebottom {
+          from {
+            bottom: -100px;
+            opacity: 0;
+          }
+
+          to {
+            bottom: 0;
+            opacity: 1;
+          }
+        }
+        .nav-pills .nav-link.active,.nav-pills .show>.nav-link{color:#fff;background-color:#004777}
+        .nav-pills .nav-link,.nav-pills>.nav-link{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;border: 1px solid #d1dee7!important;text-align:center}
+    </style>
+  <title>{% block title %} Ordo | {{ object }} {{ heading }}{% endblock %}</title>
+
+  <!-- App favicon -->
+  <link rel="shortcut icon" href="{% static 'images/ordo.png' %}">
+
+  {% block extra_css %}
+  {% endblock %}
+{% block css%}
+{% include 'css.html' %}
+{% endblock %}
+
+
+</head>
+
+
+<body data-sidebar="light">
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock %}
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-12">
+      <div style="top: 0px; right: 12px;width: 300px;position:absolute;word-wrap: break-word! important;z-index:5000;">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="toast fade show mb-1"  role="alert" data-bs-autohide="false" aria-atomic="true">
+          <div class="toast-header bg-white">
+            <img src="{% static 'images/ordo.png' %}" alt="" class="me-2" height="18">
+            <strong class="me-auto">Ordo</strong>
+            <small class="text-muted">get_nat_time</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body bg-white">
+            <div class="d-flex flex-row">
+                <span class="my-auto">
+            {% if message.tags == 'alert-success' %}
+            <i class="bx bx-check-circle h4 text-success me-3"></i>
+            {% elif message.tags == 'alert-warning' %}
+            <i class="bx bx-error h4 text-warning me-3"></i>
+            {% elif message.tags == 'alert-danger' %}
+            <i class="font-size-20 bx bx-no-entry h4 text-danger me-3"></i>
+            {% else %}
+            <i class="mdi mdi-alert-circle-outline h4 text-info me-3"></i>
+            {% endif %}</span>
+              <span>{{ message }}</span>
+
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+        {% endif %}
+      </div></div>
+      </div>
+
+      {% block contents %}
+      {% endblock %}
+
+  </div>
+
+
+{% block r_sidebar %}
+{% endblock %}
+
+
+{% block javascript %}
+{% include 'javascript.html'%}
+{% endblock %}
+{% block extra_javascript %}
+{% endblock %}
+  </div>
+
+</div>
+
+</body>
+
+</html>
